@@ -4,11 +4,15 @@ const Engineer = require("../lib/Engineer");
 const Intern = require("../lib/Intern");
 const Manager = require("../lib/Manager");
 const generate = require("./page-template")
-let staffArray = []
+let team = []
 
 // const questions = require('Develop\src\questions.js');
 const { managerQuestions, internQuestions,
      engineerQuestions, employeeTypeQuestion } = require('./questions');
+
+     const writeThatPage = () => {
+        fs.writeFileSync('index.html',generate(team))
+    }
 
 
 function employeeType(){
@@ -34,9 +38,12 @@ let manager = () => {
         .prompt(managerQuestions)
         .then((response) => {
         let manager = new Manager(response.name, response.id, response.email, response.officeNumber);
-        staffArray.push(manager)
+        team.push(manager)
         if (response.moreEmployees){
             employeeType();
+        }
+        else {
+        writeThatPage();
         }
 
     })
@@ -47,10 +54,13 @@ let intern = () => {
         .prompt(internQuestions)
         .then((response) => {
         let intern = new Intern(response.name, response.id, response.email, response.school);
-        staffArray.push(intern)
+        team.push(intern)
         if (response.moreEmployees){
             employeeType();
         }
+        else {
+            writeThatPage();
+            }
 
     })
 };
@@ -59,14 +69,21 @@ let engineer = () => {
     inquirer
         .prompt(engineerQuestions)
         .then((response) => {
-        let engineer = new Intern(response.name, response.id, response.email, response.github);
-        staffArray.push(engineer)
+        let engineer = new Engineer(response.name, response.id, response.email, response.github);
+        team.push(engineer)
         if (response.moreEmployees){
             employeeType();
         }
+        else {
+            writeThatPage();
+            }
 
     })
 };
+
+
+
+
 
 employeeType();
     
