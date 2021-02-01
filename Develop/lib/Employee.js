@@ -10,9 +10,7 @@ class Employee{
         return this.name;
     }
     
-    getId(){
-        return this.id;
-    }
+    getId = () =>  this.id;
     
     getEmail = () => this.email;
     
